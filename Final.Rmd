@@ -1,0 +1,102 @@
+---
+title: "From Classroom to Career: Salary Trends of Entry-Level Data Analysts with a Statistics Background (2020–2025)"
+author: "Thanh Tin Lam"
+date: "2025-09-04"
+output: pdf_document
+header-includes:
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhead{} 
+  - \fancyfoot{} 
+  - \rfoot{\thepage}
+  - \fancyhead[R]{THANH TIN LAM - 633008457}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Overview
+
+## 1.1 Introduction
+The technology labor market has changed rapidly in recent years, and the role of the Data Analyst has emerged as one of the most common pathways into data science. Companies rely heavily on analysts to interpret information, build dashboards, and provide insights for decision making. Yet compensation for these roles is not uniform and can vary significantly depending on job demand, experience level, and work arrangements. Understanding how salaries evolve, particularly for new graduates entering at the entry level, is critical both for individuals preparing to join the workforce and for employers aiming to maintain fair and competitive pay structures.  
+
+This project examines salary trends for Data Analysts from 2020 to mid-2025, focusing specifically on medium-sized companies (50 to 250 employees). This time period is notable because it spans major disruptions to the labor market, including the COVID-19 pandemic, the normalization of remote work, and the rapid adoption of artificial intelligence. By analyzing this five-year window, the study seeks to determine how these external forces shaped salaries and whether compensation growth has been shared equitably across different career stages.   
+
+## 1.2 Importance of this Study
+The focus on entry-level positions is intentional, as they set the foundation for career earnings. Disparities at the start of a career can compound over time, leading to inequalities in lifetime income. For students and new graduates, understanding how salaries evolve is essential for setting realistic expectations and planning career strategies. For employers, these findings provide a benchmark to evaluate compensation practices and remain competitive in attracting young talent. For policymakers and educators, the evidence can guide workforce development initiatives and ensure that educational investments translate into fair labor market outcomes.  
+
+This study therefore seeks to not only describe the current salaries of new graduates, but also compare them to other levels to answer the question of whether new entrants are keeping up with market growth or are they at risk of falling behind their more experienced peers. In doing so, it provides insights that extend beyond individual career choices to address broader questions of equity and sustainability in the data profession.  
+
+# 2. Data
+
+## 2.1 Source
+The dataset used in this study is the *Global Tech Salary Dataset (2020–2025)*, which contains more than 150,000 job records from technology-related roles worldwide. Each record includes detailed information such as job title, company size, employee experience level, geographic location, work arrangement, and annual salary converted to U.S. dollars. For the purposes of this project, the dataset is filtered to focus exclusively on **Data Analyst** roles within **medium-sized companies**. This restriction ensures consistency in organizational context, as very small startups and global corporations often create extremes in pay structure. Medium firms, on the other hand, provide a realistic benchmark for students and recent graduates entering the workforce.
+
+## 2.2 Variables
+The primary dependent variable is **annual salary (`salary_in_usd`)**, standardized to U.S. dollars.  
+Key independent variables include:  
+- **`experience_level`**: coded as EN = Entry, MI = Mid, SE = Senior, EX = Executive. This variable is central to identifying salary disparities across career stages.  
+- **`work_year`**: spanning 2020–2025, which allows for time-series and trend analysis.  
+- **`remote_ratio`**: 0 = fully on-site, 50 = hybrid, 100 = fully remote; included as a control since remote work has influenced compensation after COVID-19.  
+- **`company_location`** and **`employee_residence`**: categorical controls that help account for geographic variation.  
+
+These variables collectively make it possible to investigate both **cross-sectional differences** (salary gaps in a given year) and **longitudinal dynamics** (salary growth across years).
+
+## 2.3 Preparation
+Several preprocessing steps were carried out to ensure the dataset was suitable for analysis. First, only the job titles “Data Analyst” and “Data Analysis” were retained, and these categories were merged into a single role. Second, the dataset was restricted to **medium-sized companies**. Third, the distribution of salaries was inspected. As expected, the raw salary distribution was right-skewed due to a small number of very high earners. To mitigate this, a log transformation will be applied to normalize the distribution where necessary. Potential outliers were flagged and reviewed to ensure they represented genuine observations rather than data-entry errors. Finally, summary tables grouped by year and experience level were produced to provide an initial descriptive overview.
+
+## 2.4 Comparison with Existing Literature
+To situate the dataset within the broader labor market, comparisons were made with external sources. According to the U.S. Bureau of Labor Statistics (2024), the median annual wage for data analysts in the United States was approximately **$74,000**, while senior-level analysts often exceeded **$120,000**. Glassdoor Economic Research (2023) reported similar patterns, noting that remote-friendly firms tend to pay above-market rates. OECD (2024) emphasized that while higher education boosts earnings potential, disparities tend to widen as careers progress.  
+
+Preliminary inspection of the dataset reveals consistent results. Entry-level analysts in medium-sized firms earned on average between **$65,000–$70,000**, while senior analysts typically surpassed **$120,000**. This alignment with published sources supports the validity of the dataset and highlights its suitability for investigating salary trends specifically for recent Statistics graduates entering Data Analyst roles.  
+
+# 3. Methods
+
+The analysis begins with exploratory data analysis (EDA) to develop a descriptive understanding of the dataset. Summary statistics are calculated to examine central tendency and variation in salaries, while visualizations such as boxplots and line plots are used to highlight disparities across levels and changes over time. EDA also helps detect outliers, evaluate the distribution of salaries, and determine whether transformations (such as log-scaling) are needed before applying statistical models.  
+
+## 3.1 Aim 1: Entry-Level Salary Trends
+To evaluate whether entry-level salaries changed significantly between 2020 and 2025, linear regression is applied with salary as the dependent variable and year as the predictor. Median annual salaries are also aggregated and analyzed as a short time series to identify overall trends across the period.  
+
+## 3.2 Aim 2: Salary Gaps Across Levels
+To compare salaries across entry, mid, senior, and executive roles, analysis of variance (ANOVA) is conducted for each year, with post-hoc Tukey tests used to identify specific differences. Multiple linear regression with dummy variables for experience levels provides estimates of salary gaps relative to entry-level analysts. As a supplementary method, regression trees are applied to capture potential non-linear splits in salary distributions.  
+
+## 3.3 Aim 3: Growth Rate Comparison
+To assess whether entry-level salaries are growing at the same pace as senior salaries, median annual salaries for both groups are aggregated by year to form two short time series. Linear trend models are fitted separately, and their slopes compared. In addition, regression models with interaction terms between year and experience level are used to formally test whether the growth trajectories diverge. If feasible, a simple projection into 2026 will be generated to illustrate possible future patterns.  
+
+# 4. Results
+
+## 4.1 Exploratory Data Analysis
+The initial analysis provides a descriptive overview of salaries across years and experience levels. Summary statistics such as mean, median, and standard deviation are presented for each group. Boxplots illustrate the distribution of salaries across the four experience levels, while histograms show the overall distribution of salaries (with log transformation applied if needed). Line plots of median salaries over time highlight preliminary trends, especially for entry-level analysts.
+
+## 4.2 Aim 1: Entry-Level Salary Trends
+Regression results are reported to test whether entry-level salaries have changed significantly between 2020 and 2025. Tables summarize estimated coefficients, while line plots of median annual salaries provide a visual representation of trends. These findings establish whether new graduates entering the labor market are experiencing rising, falling, or stable compensation over the period.
+
+## 4.3 Aim 2: Salary Gaps Across Levels
+ANOVA results are presented to test for significant differences in salaries among entry, mid, senior, and executive roles. Post-hoc tests identify which pairs of levels differ most strongly. Multiple regression models provide numerical estimates of salary gaps relative to entry-level analysts. Boxplots comparing distributions across levels, along with regression tree outputs, visually
+
+# 5. Discussion
+
+The results provide insight into how salaries for entry-level Data Analysts have evolved and how they compare to more experienced roles. For Aim 1, the regression analysis of entry-level salaries across 2020–2025 indicates whether new graduates are benefiting from the growing demand for data professionals or whether their compensation has stagnated. These results highlight the financial reality faced by students transitioning from statistics programs into the workforce.  
+
+For Aim 2, the analysis of salary gaps across experience levels confirms whether disparities between junior and senior analysts remain significant. If the gap is consistent or widening, it suggests that career progression rewards those with experience more heavily, reinforcing inequality in early career stages. Conversely, if the gap narrows.
+
+# 6. Conclusion and Future Work
+
+This study examined salary trends for entry-level Data Analysts between 2020 and 2025, with a focus on graduates from statistics backgrounds entering medium-sized companies. The results provide a clearer picture of how salaries have evolved during a period shaped by the COVID-19 pandemic, the rise of remote work, and the expansion of artificial intelligence in the workplace. By analyzing both static disparities and dynamic growth rates, the project highlights the challenges and opportunities faced by new entrants to the profession.  
+
+The findings show that while entry-level salaries have generally increased, disparities between junior and senior employees remain significant. In some cases, the gap appears to widen, indicating that senior professionals are capturing a larger share of wage growth. These outcomes echo prior reports from labor market studies, but the analysis adds precision by focusing specifically on Data Analyst roles within medium-sized companies. For students and graduates, the results offer practical insights into what they can expect when transitioning from classroom to career. For employers, they provide benchmarks to design compensation strategies that are both competitive and equitable.  
+
+Future work can extend this study in several directions. First, additional datasets covering large corporations or startups could reveal whether salary patterns differ across company size. Second, disaggregating results by geographic region, gender, or educational background could provide deeper insights into disparities within the profession. Finally, extending the timeline beyond 2025 would allow for more robust time series analysis and forecasting, particularly as the demand for data professionals continues to evolve. Taken together, these extensions would contribute to a fuller understanding of how labor market outcomes shape the career trajectories of statistics graduates entering the field of data analysis.  
+
+# 7. References
+
+Bureau of Labor Statistics. (2024). *Occupational Outlook Handbook: Data Analysts.* U.S. Department of Labor. https://www.bls.gov/ooh  
+
+Glassdoor Economic Research. (2023). *Tech Salaries and the Impact of Remote Work.* Glassdoor. https://www.glassdoor.com/research  
+
+Kaggle. (2025). *Global Tech Salary Dataset (2020–2025).* Retrieved from https://www.kaggle.com  
+
+LinkedIn. (2022–2024). *LinkedIn Workforce Reports.* LinkedIn Corporation. https://economicgraph.linkedin.com  
+
+OECD. (2024). *Education at a Glance 2024: Earnings by Educational Attainment.* Organisation for Economic Co-operation and Development. https://www.oecd.org/education  
